@@ -11,7 +11,7 @@ module Nesta
     class << self
       attr_accessor :settings, :author_settings, :yaml_conf
     end
-    
+
     def self.method_missing(method, *args)
       setting = method.to_s
       if settings.include?(setting)
@@ -40,11 +40,11 @@ module Nesta
     end
     
     def self.page_path(basename = nil)
-      get_path(File.join(content_path, "pages"), basename)
+      get_path(File.join(content_path, 'pages'), basename)
     end
     
     def self.attachment_path(basename = nil)
-      get_path(File.join(content_path, "attachments"), basename)
+      get_path(File.join(content_path, 'attachments'), basename)
     end
     
     def self.yaml_path
@@ -53,7 +53,7 @@ module Nesta
     
     def self.from_environment(setting)
       value = ENV["NESTA_#{setting.upcase}"]
-      overrides = { "true" => true, "false" => false }
+      overrides = { 'true' => true, 'false' => false }
       overrides.has_key?(value) ? overrides[value] : value
     end
     private_class_method :from_environment
