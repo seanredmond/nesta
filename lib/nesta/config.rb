@@ -15,7 +15,7 @@ module Nesta
     def self.method_missing(method, *args)
       setting = method.to_s
       if settings.include?(setting)
-        from_environment(setting) || from_yaml(setting)
+        ENV["NESTA_#{setting.upcase}"] || from_yaml(setting)
       else
         super
       end
@@ -50,13 +50,6 @@ module Nesta
     def self.yaml_path
       File.expand_path('config/config.yml', Nesta::App.root)
     end
-    
-    def self.from_environment(setting)
-      value = ENV["NESTA_#{setting.upcase}"]
-      overrides = { 'true' => true, 'false' => false }
-      overrides.has_key?(value) ? overrides[value] : value
-    end
-    private_class_method :from_environment
     
     def self.yaml_exists?
       File.exist?(yaml_path)
